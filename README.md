@@ -1,19 +1,19 @@
-# 🚀 GigShield AI – Parametric Insurance for Gig Workers
+# 🚀 GigShield AI – Insurance for Gig Workers
 
-GigShield AI is an **AI-powered parametric insurance platform** that protects gig workers (Zomato, Swiggy, Zepto, etc.) from **income loss due to external disruptions** like rain, pollution, and extreme weather.
+GigShield AI is an **AI-powered parametric insurance platform** that helps gig workers (Zomato, Swiggy, Zepto, etc.) protect their **income from external disruptions** like rain, heat, and pollution.
 
 ---
 
 ## 🎯 Problem
 
-Gig workers in India lose **20–30% income** due to:
+Gig workers lose **20–30% of their income** due to:
 
-- 🌧️ Heavy rain / floods  
+- 🌧️ Heavy rain  
 - 🌡️ Extreme heat  
 - 🌫️ High pollution  
-- 🚫 Curfews / disruptions  
+- 🚫 Curfews or road restrictions  
 
-There is **no income protection system** available today.
+👉 Currently, there is **no income protection system** for them.
 
 ---
 
@@ -21,22 +21,21 @@ There is **no income protection system** available today.
 
 GigShield AI provides:
 
-- 📊 AI-based risk assessment  
-- ⚡ Automatic claim triggering (parametric model)  
+- 📊 AI-based premium calculation  
+- ⚡ Automatic claim triggering (no manual claims)  
 - 💸 Instant payouts  
-- 📅 Weekly premium model  
+- 📅 Weekly subscription model  
 
 ---
 
-## ⚙️ Workflow
+## ⚙️ How It Works
 
 1. User enters location  
-2. AI calculates weekly premium  
-3. Policy activated  
+2. System calculates weekly premium  
+3. Policy starts  
 4. System monitors weather & conditions  
-5. Trigger occurs (rain/AQI/etc.)  
-6. Claim auto-triggered  
-7. Payout processed instantly  
+5. If disruption occurs → claim triggered automatically  
+6. Payout sent instantly  
 
 ---
 
@@ -52,17 +51,19 @@ GigShield AI provides:
 
 ## 🌦️ Parametric Triggers
 
+Payout happens when:
+
 - Rainfall > 50mm  
 - AQI > 400  
 - Temperature > 45°C  
 
 ---
 
-## 🧠 AI/ML Usage
+## 🧠 AI Usage
 
-- Risk prediction model for pricing  
-- Fraud detection using anomaly detection  
-- Activity & location validation  
+- Risk prediction for premium calculation  
+- Fraud detection (duplicate/fake claims)  
+- Location & activity validation  
 
 ---
 
@@ -70,29 +71,30 @@ GigShield AI provides:
 
 - Frontend: React + Vite  
 - Styling: Custom CSS  
-- Backend (Planned): Spring Boot / Node.js  
-- AI/ML (Planned): Python  
+- Backend: (Planned)  
+- AI/ML: (Planned)  
 
 ---
 
 ## 📂 Project Structure
 
+```bash
 GigShield-AI/
 │
-├── README.md                 # Project overview and details
-├── demo-video-link.txt       # Link to demo video
+├── README.md                 # Project overview
+├── demo-video-link.txt       # Demo video link
 │
-├── docs/                     # Documentation files
-│   └── overview.md           # Project explanation and workflow
+├── docs/
+│   └── overview.md           # Project explanation
 │
-├── frontend/                 # React frontend application
+├── frontend/
 │   ├── src/
-│   │   ├── App.jsx           # Main UI component
+│   │   ├── App.jsx           # Main UI
 │   │   ├── main.jsx          # Entry point
-│   │   └── index.css         # Styling (UI design)
+│   │   └── index.css         # Styling
 │   │
-│   ├── public/               # Static files (if any)
-│   ├── package.json          # Dependencies and scripts
-│   └── vite.config.js        # Vite configuration
+│   ├── public/               # Static files
+│   ├── package.json
+│   └── vite.config.js
 │
-└── screenshots               # UI images for README
+└── screenshots/              # UI images (optional)
