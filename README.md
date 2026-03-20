@@ -98,3 +98,6 @@ GigShield-AI/
 │   └── vite.config.js
 │
 └── screenshots               # UI images (optional)
+
+## 🌐 Live Demo
+https://9abhinav.github.io/GigShield-AI/
