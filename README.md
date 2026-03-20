@@ -76,3 +76,23 @@ GigShield AI provides:
 ---
 
 ## 📂 Project Structure
+
+GigShield-AI/
+│
+├── README.md                 # Project overview and details
+├── demo-video-link.txt       # Link to demo video
+│
+├── docs/                     # Documentation files
+│   └── overview.md           # Project explanation and workflow
+│
+├── frontend/                 # React frontend application
+│   ├── src/
+│   │   ├── App.jsx           # Main UI component
+│   │   ├── main.jsx          # Entry point
+│   │   └── index.css         # Styling (UI design)
+│   │
+│   ├── public/               # Static files (if any)
+│   ├── package.json          # Dependencies and scripts
+│   └── vite.config.js        # Vite configuration
+│
+└── screenshots               # UI images for README
