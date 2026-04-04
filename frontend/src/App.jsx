@@ -1,81 +1,112 @@
-import { useState } from "react";
-import "./index.css";
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'sonner';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import BuyPolicy from './pages/BuyPolicy';
+import Claims from './pages/Claims';
+import AdminDashboard from './pages/AdminDashboard';
+import SimulatorPanel from './pages/SimulatorPanel';
+import Sidebar from './components/Sidebar';
+import { useEffect, useState } from 'react';
 
-export default function App() {
-  const [premium, setPremium] = useState(80);
-  const [location, setLocation] = useState("Hyderabad");
-  const [risk, setRisk] = useState("Medium");
+const ProtectedRoute = ({ children, roleRequired }) => {
+  const token = localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-  const calculatePremium = () => {
-    if (risk === "Low") setPremium(50);
-    else if (risk === "Medium") setPremium(80);
-    else setPremium(120);
+  if (!token) return <Navigate to="/login" replace />;
+  if (roleRequired && user.role !== roleRequired) return <Navigate to="/" replace />;
+  return children;
+};
+
+function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const checkUser = () => {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) setUser(JSON.parse(storedUser));
+      else setUser(null);
+    };
+    checkUser();
+    window.addEventListener('storage', checkUser);
+    return () => window.removeEventListener('storage', checkUser);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    setUser(null);
   };
 
+  // If not logged in, show login page only
+  if (!user) {
+    return (
+      <Router>
+        <div className="min-h-screen">
+          <Routes>
+            <Route path="*" element={<Login onLogin={(u) => setUser(u)} />} />
+          </Routes>
+        </div>
+        <Toaster
+          position="top-right"
+          theme="dark"
+          toastOptions={{
+            style: {
+              background: 'rgba(15, 23, 42, 0.9)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              backdropFilter: 'blur(12px)',
+              color: '#e2e8f0',
+            },
+          }}
+        />
+      </Router>
+    );
+  }
+
   return (
-    <div>
-      <h1>🚀 GigShield AI</h1>
+    <Router>
+      <div className="min-h-screen flex">
+        <Sidebar user={user} onLogout={handleLogout} />
 
-      <div className="container">
-
-        {/* PROFILE */}
-        <div className="card">
-          <div className="section-title">👤 User Profile</div>
-
-          <input
-            type="text"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            placeholder="Enter Location"
-          />
-
-          <div className="select-wrapper">
-            <select value={risk} onChange={(e) => setRisk(e.target.value)}>
-              <option value="Low">Low Risk Area</option>
-              <option value="Medium">Medium Risk Area</option>
-              <option value="High">High Risk Area</option>
-            </select>
+        {/* Main Content — shifted right by sidebar width */}
+        <main className="flex-1 lg:ml-[240px] min-h-screen">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-16 lg:pt-8">
+            <Routes>
+              <Route path="/" element={
+                <ProtectedRoute>
+                  {user.role === 'admin' ? <Navigate to="/admin" replace /> : <Dashboard user={user} />}
+                </ProtectedRoute>
+              } />
+              <Route path="/buy-policy" element={
+                <ProtectedRoute><BuyPolicy user={user} /></ProtectedRoute>
+              } />
+              <Route path="/claims" element={
+                <ProtectedRoute><Claims user={user} /></ProtectedRoute>
+              } />
+              <Route path="/admin" element={
+                <ProtectedRoute roleRequired="admin"><AdminDashboard /></ProtectedRoute>
+              } />
+              <Route path="/simulator" element={<SimulatorPanel />} />
+              <Route path="/login" element={<Navigate to="/" replace />} />
+            </Routes>
           </div>
-
-          <button className="primary" onClick={calculatePremium}>
-            Calculate Premium
-          </button>
-
-          <div className="highlight">
-            Weekly Premium: <span className="green">₹{premium}</span>
-          </div>
-        </div>
-
-        {/* CONDITIONS */}
-        <div className="card">
-          <div className="section-title">🌦️ Live Risk Monitor</div>
-
-          <p>🌧 Rainfall: <span className="green">60mm ✔</span></p>
-          <p>🌫 AQI: <span className="green">420 ✔</span></p>
-          <p>🌡 Temp: 44°C</p>
-
-          <div className="divider"></div>
-
-          <p className="red">⚠ Auto Claim Triggered</p>
-        </div>
-
-        {/* PAYOUT */}
-        <div className="card">
-          <div className="section-title">💸 Smart Payout</div>
-
-          <p>Days Affected: 2</p>
-          <p>Daily Compensation: ₹300</p>
-
-          <div className="highlight">
-            Total Payout: <span className="green">₹600</span>
-          </div>
-
-          <button className="success">
-            Instant UPI Transfer ⚡
-          </button>
-        </div>
-
+        </main>
       </div>
-    </div>
+
+      <Toaster
+        position="top-right"
+        theme="dark"
+        richColors
+        toastOptions={{
+          style: {
+            background: 'rgba(15, 23, 42, 0.9)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            backdropFilter: 'blur(12px)',
+            color: '#e2e8f0',
+          },
+        }}
+      />
+    </Router>
   );
 }
+
+export default App;

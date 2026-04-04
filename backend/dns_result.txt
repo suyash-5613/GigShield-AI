@@ -1,0 +1,1 @@
+cluster-shard-00-02.ig2sa.mongodb.net:27017,cluster-shard-00-01.ig2sa.mongodb.net:27017,cluster-shard-00-00.ig2sa.mongodb.net:27017
